@@ -21,3 +21,24 @@ Under the hood, interface values can be thought of as a tuple of a value and a c
     A nil interface value holds neither value nor concrete type.
     Calling a method on a nil interface is a run-time error because there is no type inside the interface tuple to
     indicate which concrete method to call.
+
+5. problem_05
+    Type assertions
+    A type assertion provides access to an interface value's underlying concrete value.
+    t := i.(T)
+    This statement asserts that the interface value i holds the concrete type T and assigns the underlying T value to
+    the variable t.
+
+    If i does not hold a T, the statement will trigger a panic.
+    To test whether an interface value holds a specific type, a type assertion can return two values:
+    the underlying value and a boolean value that reports whether the assertion succeeded.
+    t, ok := i.(T)
+    If i holds a T, then t will be the underlying value and ok will be true.
+    If not, ok will be false and t will be the zero value of type T, and no panic occurs.
+    Note the similarity between this syntax and that of reading from a map.
+
+Note:
+    The interface type that specifies zero methods is known as the empty interface: interface{}
+    An empty interface may hold values of any type. (Every type implements at least zero methods.)
+    Empty interfaces are used by code that handles values of unknown type.
+    For example, fmt.Print takes any number of arguments of type interface{}.
