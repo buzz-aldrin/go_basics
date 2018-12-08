@@ -64,6 +64,16 @@ Under the hood, interface values can be thought of as a tuple of a value and a c
     It returns an io.EOF error when the stream ends.
     The example code creates a strings.Reader and consumes its output 8 bytes at a time.
 
+9. problem_09
+    Exercise: rot13Reader
+    A common pattern is an io.Reader that wraps another io.Reader, modifying the stream in some way.
+    For example, the gzip.NewReader function takes an io.Reader (a stream of compressed data) and returns a *gzip.Reader
+    that also implements io.Reader (a stream of the decompressed data).
+
+    Implement a rot13Reader that implements io.Reader and reads from an io.Reader, modifying the stream by applying the
+    rot13 substitution cipher to all alphabetical characters.
+    The rot13Reader type is provided for you. Make it an io.Reader by implementing its Read method.
+
 Note:
     The interface type that specifies zero methods is known as the empty interface: interface{}
     An empty interface may hold values of any type. (Every type implements at least zero methods.)
