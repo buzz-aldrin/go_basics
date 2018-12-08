@@ -15,3 +15,9 @@ Under the hood, interface values can be thought of as a tuple of a value and a c
     In some languages this would trigger a null pointer exception, but in Go it is common to write methods that
     gracefully handle being called with a nil receiver (as with the method M in this example.)
     Note that an interface value that holds a nil concrete value is itself non-nil.
+
+4. problem_04
+    Nil interface values
+    A nil interface value holds neither value nor concrete type.
+    Calling a method on a nil interface is a run-time error because there is no type inside the interface tuple to
+    indicate which concrete method to call.
