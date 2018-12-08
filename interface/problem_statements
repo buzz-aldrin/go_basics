@@ -37,6 +37,22 @@ Under the hood, interface values can be thought of as a tuple of a value and a c
     If not, ok will be false and t will be the zero value of type T, and no panic occurs.
     Note the similarity between this syntax and that of reading from a map.
 
+6. problem_06: https://tour.golang.org/methods/16
+    Type switches
+    A type switch is a construct that permits several type assertions in series.
+    A type switch is like a regular switch statement, but the cases in a type switch specify types (not values),
+    and those values are compared against the type of the value held by the given interface value.
+
+7. problem_07
+    Exercise: Errors
+    Copy your Sqrt function from the earlier exercise and modify it to return an error value.
+    Sqrt should return a non-nil error value when given a negative number, as it doesn't support complex numbers.
+    Create a new type
+    type ErrNegativeSqrt float64
+    and make it an error by giving it a
+    func (e ErrNegativeSqrt) Error() string
+    method such that ErrNegativeSqrt(-2).Error() returns "cannot Sqrt negative number: -2"
+
 Note:
     The interface type that specifies zero methods is known as the empty interface: interface{}
     An empty interface may hold values of any type. (Every type implements at least zero methods.)
