@@ -1,5 +1,12 @@
 Interfaces
-A value of interface type can hold any value that implements those methods.
-Catch: receiver type should match. We cannot assign a type which implements pointer receiver type to a interface which
-is expecting a value receiver type
-Eg: problem_01
+Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
+(value, type)
+
+1. problem_01
+    A value of interface type can hold any value that implements the methods of interface type.
+    Catch: receiver type should match. We cannot assign a type which implements pointer receiver type to a interface
+    type which is expecting a value receiver type and vice versa
+
+2. problem_02
+   A interface type can only call methods declared in the interface on the concrete type it is holding
+
