@@ -1,0 +1,5 @@
+Interfaces
+A value of interface type can hold any value that implements those methods.
+Catch: receiver type should match. We cannot assign a type which implements pointer receiver type to a interface which
+is expecting a value receiver type
+Eg: problem_01
