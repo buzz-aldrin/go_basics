@@ -53,6 +53,17 @@ Under the hood, interface values can be thought of as a tuple of a value and a c
     func (e ErrNegativeSqrt) Error() string
     method such that ErrNegativeSqrt(-2).Error() returns "cannot Sqrt negative number: -2"
 
+8. problem_08
+    Readers
+    The io package specifies the io.Reader interface, which represents the read end of a stream of data.
+    The Go standard library contains many implementations of these interfaces, including files, network connections,
+    compressors, ciphers, and others.
+    The io.Reader interface has a Read method:
+    func (T) Read(b []byte) (n int, err error)
+    Read populates the given byte slice with data and returns the number of bytes populated and an error value.
+    It returns an io.EOF error when the stream ends.
+    The example code creates a strings.Reader and consumes its output 8 bytes at a time.
+
 Note:
     The interface type that specifies zero methods is known as the empty interface: interface{}
     An empty interface may hold values of any type. (Every type implements at least zero methods.)
