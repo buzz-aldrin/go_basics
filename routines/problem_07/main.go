@@ -5,8 +5,8 @@ import "fmt"
 func gen(arr ...int) <-chan int {
 	in := make(chan int)
 	go func() {
-		for i := range arr {
-			in <- i
+		for _, v := range arr {
+			in <- v
 		}
 		close(in)
 	}()
