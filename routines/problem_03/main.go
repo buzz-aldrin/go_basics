@@ -1,30 +1,24 @@
 package main
 
-import "fmt"
-
-func fib(result, quit chan int) {
-	x, y := 0, 1
-	for {
-		select {
-		case result <- x:
-			x, y = y, x+y
-		case <-quit:
-			fmt.Println("quiting")
-			return
-		}
-	}
-
-}
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	result := make(chan int, 10)
-	quit := make(chan int)
-	go func() {
-		for i := 0; i < 10; i++ {
-			fmt.Println(<-result)
-		}
-		quit <- 1
-	}()
+	ticker := time.NewTicker(time.Second)
+	boom := time.NewTicker(time.Second * 10)
 
-	fib(result, quit)
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Println("tick")
+		case <-boom.C:
+			fmt.Println("BOOM")
+			return
+		default:
+			fmt.Println("blocked")
+			time.Sleep(500 * time.Millisecond)
+		}
+	}
 }
