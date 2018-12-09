@@ -8,7 +8,7 @@ Goroutines
     Goroutines run in the same address space, so access to shared memory must be synchronized.
     The sync package provides useful primitives, although you won't need them much in Go as there are other primitives.
 
-Channels
+Channels: problem_01
     Channels are a typed conduit through which you can send and receive values with the channel operator, <-.
         ch <- v     // Send v to channel ch.
         v := <-ch   // Receive from ch, and
@@ -19,7 +19,6 @@ Channels
     ch := make(chan int)
     By default, sends and receives block until the other side is ready. This allows goroutines to synchronize without
     explicit locks or condition variables.
-    problem_01
     The example code sums the numbers in a slice, distributing the work between two goroutines. Once both goroutines
     have completed their computation, it calculates the final result.
 
@@ -39,12 +38,12 @@ Range and Close
     Note: Channels aren't like files; you don't usually need to close them. Closing is only necessary when the receiver
     must be told there are no more values coming, such as to terminate a range loop.
 
-Select
+Select: problem_02
     The select statement lets a goroutine wait on multiple communication operations.
     A select blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple
     are ready.
 
-Default Selection
+Default Selection: problem_03
     The default case in a select is run if no other case is ready.
     Use a default case to try a send or receive without blocking:
     select {
@@ -54,7 +53,7 @@ Default Selection
             // receiving from c would block
     }
 
-Exercise: Equivalent Binary Trees
+Exercise: Equivalent Binary Trees: problem_04
     1. Implement the Walk function.
     2. Test the Walk function.
         The function tree.New(k) constructs a randomly-structured (but always sorted) binary tree holding the values
@@ -66,3 +65,15 @@ Exercise: Equivalent Binary Trees
     4. Test the Same function.
     Same(tree.New(1), tree.New(1)) should return true, and Same(tree.New(1), tree.New(2)) should return false.
     The documentation for Tree can be found https://godoc.org/golang.org/x/tour/tree#Tree.
+
+sync.Mutex: problem_05
+    We've seen how channels are great for communication among goroutines.
+    But what if we don't need communication? What if we just want to make sure only one goroutine can access a variable
+    at a time to avoid conflicts?
+    This concept is called mutual exclusion, and the conventional name for the data structure that provides it is mutex.
+    Go's standard library provides mutual exclusion with sync.Mutex and its two methods:
+        Lock
+        Unlock
+    We can define a block of code to be executed in mutual exclusion by surrounding it with a call to Lock and Unlock as
+    shown on the Inc method.
+    We can also use defer to ensure the mutex will be unlocked as in the Value method.
