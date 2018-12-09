@@ -1,3 +1,5 @@
+To Read https://www.cs.cmu.edu/~crary/819-f09/Hoare78.pdf
+
 Goroutines
     A goroutine is a lightweight thread managed by the Go runtime.
         go f(x, y, z)
