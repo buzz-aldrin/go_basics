@@ -112,9 +112,32 @@ Squaring numbers: problem_07
     We can also rewrite main as a range loop, like the other stages:
 
 Fan-out, fan-in: problem_08
+https://blog.golang.org/pipelines
     Multiple functions can read from the same channel until that channel is closed; this is called fan-out.
     This provides a way to distribute work amongst a group of workers to parallelize CPU use and I/O.
     A function can read from multiple inputs and proceed until all are closed by multiplexing the input channels onto a
     single channel that's closed when all the inputs are closed. This is called fan-in.
     We can change our pipeline to run two instances of sq, each reading from the same input channel.
     We introduce a new function, merge, to fan in the results:
+
+    The merge function converts a list of channels to a single channel by starting a goroutine for each inbound channel
+    that copies the values to the sole outbound channel. Once all the output goroutines have been started, merge starts
+    one more goroutine to close the outbound channel after all sends on that channel are done.
+    Sends on a closed channel panic, so it's important to ensure all sends are done before calling close. The
+    sync.WaitGroup type provides a simple way to arrange this synchronization:
+
+Stopping short
+    There is a pattern to our pipeline functions:
+    1. stages close their outbound channels when all the send operations are done.
+    2. stages keep receiving values from inbound channels until those channels are closed.
+    This pattern allows each receiving stage to be written as a range loop and ensures that all goroutines exit once all
+    values have been successfully sent downstream.
+
+    But in real pipelines, stages don't always receive all the inbound values. Sometimes this is by design: the receiver
+    may only need a subset of values to make progress. More often, a stage exits early because an inbound value
+    represents an error in an earlier stage. In either case the receiver should not have to wait for the remaining
+    values to arrive, and we want earlier stages to stop producing values that later stages don't need.
+
+Explicit cancellation
+    When main decides to exit without receiving all the values from out, it must tell the goroutines in the upstream
+    stages to abandon the values they're trying to send. It does so by sending values on a channel called done.
