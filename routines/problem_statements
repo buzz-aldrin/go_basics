@@ -1,5 +1,8 @@
 To Read https://www.cs.cmu.edu/~crary/819-f09/Hoare78.pdf
 
+https://www.youtube.com/watch?v=f6kdp27TYZs
+https://vimeo.com/49718712
+
 Goroutines
     A goroutine is a lightweight thread managed by the Go runtime.
         go f(x, y, z)
@@ -143,3 +146,6 @@ Stopping short
 Explicit cancellation
     When main decides to exit without receiving all the values from out, it must tell the goroutines in the upstream
     stages to abandon the values they're trying to send. It does so by sending values on a channel called done.
+
+TODO
+    https://golang.org/doc/codewalk/sharemem/

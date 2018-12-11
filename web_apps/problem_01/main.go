@@ -76,6 +76,7 @@ func wPostHandler(t reflect.Type, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
 func server() {
 	router := mux.NewRouter()
 	router.HandleFunc("/page", postHandler).Methods(http.MethodPost)
